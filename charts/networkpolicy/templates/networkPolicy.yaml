@@ -1,0 +1,13 @@
+{{- if .Values.enabled }}
+{{- range .Values.policies }}
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "networkpolicy.labels" . | nindent 4 }}
+spec: 
+{{ toYaml .spec | indent 2 }}
+{{ end }}
+{{ end }}
