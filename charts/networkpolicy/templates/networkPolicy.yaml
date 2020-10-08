@@ -1,12 +1,13 @@
 {{- if .Values.enabled }}
+{{ $labels := include "networkpolicy.labels" . }}
 {{- range .Values.policies }}
 ---
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: {{ .name }}
   labels:
-    {{- include "networkpolicy.labels" . | nindent 4 }}
+    {{- $labels | nindent 4 }}
+  name: {{ .name }}
 spec: 
 {{ toYaml .spec | indent 2 }}
 {{ end }}
